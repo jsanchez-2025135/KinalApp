@@ -1,0 +1,554 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #c0a83d 0%, #b89a2e 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    min-height: 100vh;
+    padding-bottom: 40px;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="10" cy="10" r="2" fill="rgba(255,255,255,0.08)"/><circle cx="30" cy="20" r="1.5" fill="rgba(255,255,255,0.08)"/><circle cx="50" cy="30" r="2" fill="rgba(255,255,255,0.08)"/><circle cx="70" cy="15" r="1.8" fill="rgba(255,255,255,0.08)"/><circle cx="85" cy="40" r="2.2" fill="rgba(255,255,255,0.08)"/><circle cx="20" cy="70" r="1.7" fill="rgba(255,255,255,0.08)"/><circle cx="60" cy="80" r="2.1" fill="rgba(255,255,255,0.08)"/><circle cx="40" cy="90" r="1.6" fill="rgba(255,255,255,0.08)"/><circle cx="80" cy="85" r="1.4" fill="rgba(255,255,255,0.08)"/><circle cx="15" cy="50" r="1.9" fill="rgba(255,255,255,0.08)"/></svg>') repeat;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.navbar.bg-dark {
+    background: linear-gradient(90deg, #164973 0%, #0d3557 100%) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-brand::before {
+    content: "👥";
+    font-size: 1.3rem;
+}
+
+.navbar-brand:hover {
+    transform: translateX(8px);
+    color: #ec692c !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.row.justify-content-center {
+    margin-top: 20px;
+}
+
+.card {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: white;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    background: linear-gradient(135deg, #164973 0%, #0d3557 100%);
+    color: white;
+    padding: 25px 30px;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(236,105,44,0.15) 0%, transparent 70%);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+.card-header h4 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.card-header h4::before {
+    content: "📝";
+    font-size: 1.8rem;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.card-body {
+    padding: 35px;
+}
+
+.mb-3 {
+    margin-bottom: 1.5rem !important;
+}
+
+.form-label {
+    color: #164973;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.form-label::before {
+    content: "▸ ";
+    color: #ec692c;
+    font-size: 0.8rem;
+}
+
+.form-control, .form-select {
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    width: 100%;
+    background: white;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #ec692c;
+    box-shadow: 0 0 0 4px rgba(236, 105, 44, 0.15);
+    outline: none;
+    transform: translateY(-2px);
+}
+
+.form-control:hover:not(:focus), .form-select:hover:not(:focus) {
+    border-color: #c0a83d;
+    background: #fefefe;
+}
+
+.form-control[readonly] {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+    border-color: #c0a83d;
+}
+
+.form-control[readonly]:focus {
+    transform: none;
+    border-color: #c0a83d;
+}
+
+.d-flex {
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    border: none;
+    padding: 12px 25px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 10px;
+    flex: 1;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #5a6268 0%, #495057 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(108, 117, 125, 0.3);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #56af69 0%, #4a9b5b 100%);
+    border: none;
+    padding: 12px 25px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 10px;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-success::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-success:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #4a9b5b 0%, #3d874c 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(86, 175, 105, 0.4);
+}
+
+.btn-secondary:active, .btn-success:active {
+    transform: translateY(0);
+}
+
+h2 {
+    color: white;
+    font-weight: 800;
+    margin-bottom: 25px;
+    font-size: 2rem;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #164973 0%, #0d3557 100%);
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 50px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    letter-spacing: 0.5px;
+}
+
+h2::before {
+    content: "👥 ";
+    font-size: 1.8rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #56af69 0%, #4a9b5b 100%);
+    border: none;
+    padding: 12px 25px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 10px;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #4a9b5b 0%, #3d874c 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(86, 175, 105, 0.4);
+}
+
+.btn-primary::before {
+    content: "➕ ";
+    margin-right: 5px;
+}
+
+.table {
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table thead th {
+    background: linear-gradient(135deg, #164973 0%, #0d3557 100%);
+    color: white;
+    font-weight: 700;
+    border: none;
+    padding: 16px 15px;
+    font-size: 0.95rem;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.table thead th:first-child {
+    border-top-left-radius: 20px;
+}
+
+.table thead th:last-child {
+    border-top-right-radius: 20px;
+}
+
+.table tbody tr {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.table tbody tr:hover {
+    background: linear-gradient(90deg, rgba(192,168,61,0.08) 0%, rgba(236,105,44,0.08) 100%);
+    transform: scale(1.01);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.table td {
+    padding: 14px 15px;
+    vertical-align: middle;
+    color: #333;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.table td:first-child {
+    font-weight: 600;
+    color: #164973;
+}
+
+.badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.badge.bg-success {
+    background: linear-gradient(135deg, #56af69 0%, #4a9b5b 100%) !important;
+}
+
+.badge.bg-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #c0a83d 0%, #b89a2e 100%);
+    border: none;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-right: 5px;
+    padding: 6px 15px;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #ec692c 0%, #d45a1f 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(236, 105, 44, 0.3);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    border: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 6px 15px;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-bottom: 20px;
+    }
+
+    .card {
+        margin: 0 15px;
+    }
+
+    .card-header {
+        padding: 18px 20px;
+    }
+
+    .card-header h4 {
+        font-size: 1.3rem;
+    }
+
+    .card-header h4::before {
+        font-size: 1.5rem;
+    }
+
+    .card-body {
+        padding: 25px;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+        margin: 0 15px 20px 15px;
+        display: block;
+        text-align: center;
+        padding: 10px 20px;
+    }
+
+    h2::before {
+        font-size: 1.4rem;
+    }
+
+    .d-flex.justify-content-between {
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+
+    .btn-primary, .btn-secondary, .btn-success {
+        width: 100%;
+        text-align: center;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .table {
+        min-width: 650px;
+    }
+
+    .btn-warning, .btn-danger {
+        padding: 4px 12px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-body {
+        padding: 20px;
+    }
+
+    .form-control, .form-select {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+
+    .form-label {
+        font-size: 0.85rem;
+    }
+
+    .table td, .table th {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+    }
+}
+
+.alert {
+    border-radius: 12px;
+    border: none;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724;
+    border-left: 5px solid #56af69;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #721c24;
+    border-left: 5px solid #dc3545;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    color: #0c5460;
+    border-left: 5px solid #164973;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #c0a83d 0%, #ec692c 100%);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #ec692c 0%, #164973 100%);
+}
+
+[title] {
+    position: relative;
+    cursor: help;
+}
+
+@keyframes highlightRow {
+    0% {
+        background-color: rgba(192, 168, 61, 0.3);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+tr.new-row {
+    animation: highlightRow 1s ease-out;
+}
+
+.form-control[readonly] {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23164973"><path d="M12 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm6-1.8C18 6.57 15.35 4 12 4s-6 2.57-6 6.2c0 2.34 1.95 5.44 6 9.14 4.05-3.7 6-6.8 6-9.14zM12 2c4.2 0 8 3.22 8 8.2 0 3.32-2.67 7.25-8 11.8-5.33-4.55-8-8.48-8-11.8C4 5.22 7.8 2 12 2z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    padding-right: 40px;
+}

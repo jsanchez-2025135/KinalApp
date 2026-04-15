@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - KinalApp</title>
+    <link rel="stylesheet" th:href="@{/login.css}">
+</head>
+<body>
+
+<div class="container-login">
+    <div class="box-login">
+
+        <div class="encabezado">
+            <img th:src="@{/images/kinal logo.png}" alt="Logo KinalApp" class="img-logo">
+        </div>
+
+        <h3>Iniciar Sesión</h3>
+
+        <div th:if="${error}" class="alerta-error" th:text="${error}"></div>
+        <div th:if="${param.registrado}" class="alerta-exito">Registro exitoso</div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="campo">
+                <label>Correo Electrónico</label>
+                <input type="email" name="email" required>
+            </div>
+            <div class="campo">
+                <label>Contraseña</label>
+                <input type="password" name="password" required>
+            </div>
+            <button type="submit" class="boton-submit">Entrar</button>
+        </form>
+
+        <hr>
+
+        <a th:href="@{/registro}">¿No tienes cuenta? Regístrate aquí</a>
+
+        <div class="footer-app">
+            v.1.0 - KinalApp
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${titulo}"></title>
+    <link rel="stylesheet" th:href="@{/producto.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0" th:text="${titulo}"></h4>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/productos/guardar}" th:object="${producto}" method="post">
+                        <input type="hidden" th:field="*{codigoProducto}">
+
+                        <div class="mb-3">
+                            <label class="form-label">Nombre del Producto</label>
+                            <input type="text" th:field="*{nombreProducto}" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Precio</label>
+                            <input type="number" step="0.01" th:field="*{precio}" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Stock inicial</label>
+                            <input type="number" th:field="*{stock}" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Estado</label>
+                            <select th:field="*{estado}" class="form-select">
+                                <option value="1">Activo</option>
+                                <option value="0">Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <a th:href="@{/productos}" class="btn btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-success">Guardar Producto</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

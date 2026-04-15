@@ -1,0 +1,434 @@
+/* Paleta: #164973 (Azul), #ec692c (Naranja), #c0a83d (Amarillo), #56af69 (Verde) */
+/* CSS unificado para la vista de Registro de Usuarios */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #c0a83d 0%, #b89a2e 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="10" cy="10" r="2" fill="rgba(255,255,255,0.08)"/><circle cx="30" cy="20" r="1.5" fill="rgba(255,255,255,0.08)"/><circle cx="50" cy="30" r="2" fill="rgba(255,255,255,0.08)"/><circle cx="70" cy="15" r="1.8" fill="rgba(255,255,255,0.08)"/><circle cx="85" cy="40" r="2.2" fill="rgba(255,255,255,0.08)"/><circle cx="20" cy="70" r="1.7" fill="rgba(255,255,255,0.08)"/><circle cx="60" cy="80" r="2.1" fill="rgba(255,255,255,0.08)"/><circle cx="40" cy="90" r="1.6" fill="rgba(255,255,255,0.08)"/><circle cx="80" cy="85" r="1.4" fill="rgba(255,255,255,0.08)"/><circle cx="15" cy="50" r="1.9" fill="rgba(255,255,255,0.08)"/></svg>') repeat;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 20px;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== TARJETA DE REGISTRO ========== */
+.card {
+    border: none;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: white;
+    backdrop-filter: blur(10px);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+}
+
+.card-body {
+    padding: 45px 40px;
+    position: relative;
+}
+
+/* Decoración superior */
+.card-body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, #164973, #ec692c, #c0a83d, #56af69);
+}
+
+/* Título */
+h3 {
+    color: #164973;
+    font-weight: 800;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+h3::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #ec692c, #56af69);
+    border-radius: 2px;
+}
+
+/* Icono decorativo */
+h3::before {
+    content: "📝";
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* ========== CAMPOS DEL FORMULARIO ========== */
+.mb-3 {
+    margin-bottom: 1.5rem !important;
+}
+
+.form-label {
+    color: #164973;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.form-label::before {
+    content: "▸ ";
+    color: #ec692c;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.form-control {
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    width: 100%;
+    background: white;
+}
+
+.form-control:focus {
+    border-color: #ec692c;
+    box-shadow: 0 0 0 4px rgba(236, 105, 44, 0.15);
+    outline: none;
+    transform: translateY(-2px);
+}
+
+.form-control:hover:not(:focus) {
+    border-color: #c0a83d;
+    background: #fefefe;
+}
+
+/* Iconos en los inputs */
+.form-control[type="text"] {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23164973"><path d="M12 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm6-1.8C18 6.57 15.35 4 12 4s-6 2.57-6 6.2c0 2.34 1.95 5.44 6 9.14 4.05-3.7 6-6.8 6-9.14zM12 2c4.2 0 8 3.22 8 8.2 0 3.32-2.67 7.25-8 11.8-5.33-4.55-8-8.48-8-11.8C4 5.22 7.8 2 12 2z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    padding-right: 40px;
+}
+
+.form-control[type="email"] {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23164973"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    padding-right: 40px;
+}
+
+.form-control[type="password"] {
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23164973"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    padding-right: 40px;
+}
+
+/* ========== BOTÓN DE REGISTRO ========== */
+.btn-success {
+    background: linear-gradient(135deg, #56af69 0%, #4a9b5b 100%);
+    border: none;
+    padding: 14px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.btn-success::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-success:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #4a9b5b 0%, #3d874c 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(86, 175, 105, 0.4);
+}
+
+.btn-success:active {
+    transform: translateY(0);
+}
+
+/* ========== ENLACE VOLVER AL LOGIN ========== */
+.text-center {
+    margin-top: 25px;
+}
+
+.text-center a {
+    color: #164973;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+}
+
+.text-center a::before {
+    content: "← ";
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.text-center a:hover {
+    color: #ec692c;
+    transform: translateX(-5px);
+}
+
+.text-center a:hover::before {
+    transform: translateX(-3px);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 35px 25px;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    h3::before {
+        font-size: 1.8rem;
+    }
+
+    .form-control {
+        padding: 10px 14px;
+        font-size: 0.9rem;
+    }
+
+    .btn-success {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        padding: 15px;
+    }
+
+    .card-body {
+        padding: 30px 20px;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+    }
+
+    h3::before {
+        font-size: 1.5rem;
+    }
+
+    .form-label {
+        font-size: 0.85rem;
+    }
+
+    .form-control {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+
+    .text-center a {
+        font-size: 0.85rem;
+    }
+}
+
+/* ========== ANIMACIONES ADICIONALES ========== */
+/* Efecto de carga para el botón */
+@keyframes btnPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+.btn-success:focus {
+    animation: btnPulse 0.3s ease-out;
+}
+
+/* Animación para los campos al focus */
+@keyframes inputGlow {
+    from {
+        box-shadow: 0 0 0 0 rgba(236, 105, 44, 0);
+    }
+    to {
+        box-shadow: 0 0 0 4px rgba(236, 105, 44, 0.15);
+    }
+}
+
+.form-control:focus {
+    animation: inputGlow 0.3s ease-out;
+}
+
+/* ========== ALERTAS Y MENSAJES ========== */
+.alert {
+    border-radius: 12px;
+    border: none;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #721c24;
+    border-left: 5px solid #dc3545;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724;
+    border-left: 5px solid #56af69;
+}
+
+/* ========== SCROLLBAR PERSONALIZADO ========== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #c0a83d 0%, #ec692c 100%);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #ec692c 0%, #164973 100%);
+}
+
+/* ========== UTILIDADES ========== */
+/* Tooltips */
+[title] {
+    position: relative;
+    cursor: help;
+}
+
+/* Selección de texto */
+::selection {
+    background: #ec692c;
+    color: white;
+}
+
+::-moz-selection {
+    background: #ec692c;
+    color: white;
+}
+
+/* Campo de contraseña con indicador de fuerza (opcional) */
+.password-strength {
+    margin-top: 5px;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.password-strength.weak {
+    color: #dc3545;
+    background: rgba(220, 53, 69, 0.1);
+}
+
+.password-strength.medium {
+    color: #c0a83d;
+    background: rgba(192, 168, 61, 0.1);
+}
+
+.password-strength.strong {
+    color: #56af69;
+    background: rgba(86, 175, 105, 0.1);
+}
