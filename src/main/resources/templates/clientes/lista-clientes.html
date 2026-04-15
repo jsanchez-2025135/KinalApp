@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Clientes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/cliente.css}">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/menu}">KinalApp - Volver al Menú</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Lista de Clientes</h2>
+        <a th:href="@{/clientes/nuevo}" class="btn btn-primary">Agregar Nuevo Cliente</a>
+    </div>
+
+    <table class="table table-striped table-hover shadow-sm">
+        <thead class="table-dark">
+        <tr>
+            <th>DPI</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Dirección</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c : ${clientes}">
+            <td th:text="${c.dpiCliente}"></td>
+            <td th:text="${c.nombreCliente}"></td>
+            <td th:text="${c.apellidoCliente}"></td>
+            <td th:text="${c.direccion}"></td>
+            <td>
+                <span th:if="${c.estado == 1}" class="badge bg-success">Activo</span>
+                <span th:if="${c.estado == 0}" class="badge bg-danger">Inactivo</span>
+            </td>
+            <td>
+                <a th:href="@{/clientes/editar/{id}(id=${c.dpiCliente})}" class="btn btn-warning btn-sm">Editar</a>
+                <a th:href="@{/clientes/eliminar/{id}(id=${c.dpiCliente})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('¿Estás seguro de eliminar este cliente?')">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

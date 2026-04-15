@@ -1,0 +1,401 @@
+/* Paleta: #164973 (Azul), #ec692c (Naranja), #c0a83d (Amarillo), #56af69 (Verde) */
+/* CSS unificado para cliente-formulario.html y lista-clientes.html */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #c0a83d 0%, #b89a2e 100%);
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    min-height: 100vh;
+    padding-bottom: 40px;
+}
+
+/* ========== NAVBAR PERSONALIZADO ========== */
+.navbar.bg-dark {
+    background: linear-gradient(90deg, #164973 0%, #0d3557 100%) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.navbar-brand:hover {
+    transform: translateX(5px);
+    color: #ec692c !important;
+}
+
+/* ========== CONTENEDOR PRINCIPAL ========== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== ESTILOS PARA LISTA DE CLIENTES ========== */
+/* Título y botón */
+h2 {
+    color: #164973;
+    font-weight: 700;
+    margin: 0;
+    font-size: 1.8rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary {
+    background-color: #164973;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.btn-primary:hover {
+    background-color: #ec692c;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(236, 105, 44, 0.3);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Tabla de clientes */
+.table {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.table thead th {
+    background-color: #164973;
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 12px 15px;
+    font-size: 0.95rem;
+}
+
+.table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(192, 168, 61, 0.1);
+    transform: scale(1.01);
+}
+
+.table td {
+    padding: 12px 15px;
+    vertical-align: middle;
+    color: #333;
+}
+
+/* Badges de estado */
+.badge {
+    padding: 6px 12px;
+    font-weight: 600;
+    border-radius: 20px;
+}
+
+.badge.bg-success {
+    background-color: #56af69 !important;
+}
+
+.badge.bg-danger {
+    background-color: #dc3545 !important;
+}
+
+/* Botones de acción en tabla */
+.btn-warning {
+    background-color: #c0a83d;
+    border: none;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-right: 5px;
+}
+
+.btn-warning:hover {
+    background-color: #ec692c;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(236, 105, 44, 0.3);
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+}
+
+/* ========== ESTILOS PARA FORMULARIO DE CLIENTE ========== */
+/* Tarjeta del formulario */
+.card {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background: linear-gradient(135deg, #164973 0%, #0d3557 100%);
+    color: white;
+    padding: 20px;
+    border: none;
+}
+
+.card-header h3 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.card-body {
+    padding: 30px;
+    background-color: white;
+}
+
+/* Campos del formulario */
+.form-label {
+    color: #164973;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.form-control:focus {
+    border-color: #ec692c;
+    box-shadow: 0 0 0 4px rgba(236, 105, 44, 0.1);
+    outline: none;
+}
+
+.form-control:hover:not(:focus) {
+    border-color: #c0a83d;
+}
+
+/* Select personalizado */
+.form-select {
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.form-select:focus {
+    border-color: #ec692c;
+    box-shadow: 0 0 0 4px rgba(236, 105, 44, 0.1);
+    outline: none;
+}
+
+/* Botones del formulario */
+.btn-success {
+    background-color: #56af69;
+    border: none;
+    padding: 10px 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.btn-success:hover {
+    background-color: #4a9b5b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(86, 175, 105, 0.3);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    padding: 10px 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+/* Alertas */
+.alert {
+    border-radius: 10px;
+    border: none;
+    padding: 12px 20px;
+    font-weight: 500;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 4px solid #56af69;
+}
+
+/* ========== UTILIDADES ADICIONALES ========== */
+/* Sombras personalizadas */
+.shadow-sm {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Animaciones para inputs */
+.form-control, .form-select {
+    position: relative;
+}
+
+/* Estilo para el contenedor de botones */
+.d-flex.gap-2 {
+    gap: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    .table thead th {
+        font-size: 0.85rem;
+        padding: 8px 10px;
+    }
+
+    .table td {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+
+    .btn-sm {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .btn-success, .btn-secondary {
+        padding: 8px 20px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .table thead {
+        display: none;
+    }
+
+    .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+    }
+
+    .table tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: white;
+    }
+
+    .table td {
+        text-align: right;
+        padding: 10px;
+        position: relative;
+        border: none;
+    }
+
+    .table td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 40%;
+        font-weight: bold;
+        color: #164973;
+        text-align: left;
+    }
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c0a83d;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ec692c;
+}
+
+/* Footer si existe */
+footer {
+    margin-top: 50px;
+    text-align: center;
+    padding: 20px;
+    color: #164973;
+    font-size: 0.85rem;
+}
