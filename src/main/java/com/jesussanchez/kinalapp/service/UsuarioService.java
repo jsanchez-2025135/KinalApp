@@ -1,9 +1,8 @@
 package com.jesussanchez.kinalapp.service;
 
-import com.jesussanchez.kinalapp.entity.Cliente;
 import com.jesussanchez.kinalapp.entity.Usuario;
-import com.jesussanchez.kinalapp.repository.ClienteRepository;
 import com.jesussanchez.kinalapp.repository.UsuarioRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,35 +10,39 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-
 @Transactional
-public class UsuarioService implements IUsuarioService{
+public class UsuarioService implements IUsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder; // Inyectamos el encoder
 
-
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Usuario> ListarTodos() {
         return usuarioRepository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Usuario> listarActivos() {
         return usuarioRepository.findByEstado(1);
     }
 
     @Override
     public Usuario guardar(Usuario usuario) {
-
         validarUsuario(usuario);
-        if (usuario.getEstado()==0)
+
+        // ENCRIPTACIÓN: Esta es la parte más importante
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+
+        if (usuario.getEstado() == 0) {
             usuario.setEstado(1);
+        }
         return usuarioRepository.save(usuario);
     }
 
@@ -47,28 +50,27 @@ public class UsuarioService implements IUsuarioService{
     @Transactional(readOnly = true)
     public Optional<Usuario> buscarPorCodigo(Long codigo) {
         return usuarioRepository.findById(codigo);
-
     }
 
     @Override
     public Usuario actualizar(Long codigo, Usuario usuario) {
-        if(!usuarioRepository.existsById(codigo)){
-            throw new RuntimeException("USuario no se encontro con codigo " + codigo);
-
+        if (!usuarioRepository.existsById(codigo)) {
+            throw new RuntimeException("Usuario no encontrado");
         }
-
         usuario.setCodigoUsuario(codigo);
-        validarUsuario(usuario);
 
+        // Si la contraseña cambió o se re-envía, hay que encriptarla
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+
+        validarUsuario(usuario);
         return usuarioRepository.save(usuario);
     }
 
     @Override
     public void eliminar(Long codigo) {
-
-        if(!usuarioRepository.existsById(codigo))
-            throw new RuntimeException("El usuario no se encontro con el codigo " +codigo);
-
+        if (!usuarioRepository.existsById(codigo)) {
+            throw new RuntimeException("El usuario no se encontró con el código " + codigo);
+        }
         usuarioRepository.deleteById(codigo);
     }
 
@@ -76,29 +78,20 @@ public class UsuarioService implements IUsuarioService{
     @Transactional(readOnly = true)
     public boolean existePorCodigo(Long codigo) {
         return usuarioRepository.existsById(codigo);
-
     }
 
     private void validarUsuario(Usuario usuario) {
-
         if (usuario.getUsername() == null || usuario.getUsername().trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre es un dato obligatorio");
         }
-
         if (usuario.getPassword() == null || usuario.getPassword().trim().isEmpty()) {
             throw new IllegalArgumentException("La contraseña es obligatoria.");
         }
-
         if (usuario.getEmail() == null || usuario.getEmail().trim().isEmpty()) {
             throw new IllegalArgumentException("El correo electrónico es obligatorio.");
         }
-
         if (usuario.getRol() == null || usuario.getRol().trim().isEmpty()) {
-            throw new IllegalArgumentException("El rol del usuario  es obligatorio.");
-        }
-
-        if (usuario.getEstado() < 0 || usuario.getEstado() > 1) {
-            throw new IllegalArgumentException("El estado debe ser 1 o 0 .");
+            throw new IllegalArgumentException("El rol del usuario es obligatorio.");
         }
     }
 }
