@@ -14,7 +14,7 @@ import java.util.Optional;
 public class UsuarioService implements IUsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-    private final PasswordEncoder passwordEncoder; // Inyectamos el encoder
+    private final PasswordEncoder passwordEncoder;
 
     public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
@@ -37,12 +37,18 @@ public class UsuarioService implements IUsuarioService {
     public Usuario guardar(Usuario usuario) {
         validarUsuario(usuario);
 
-        // ENCRIPTACIÓN: Esta es la parte más importante
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+
+        if (usuarioRepository.count() == 0) {
+            usuario.setRol("ADMIN");
+        } else {
+            usuario.setRol("USER");
+        }
 
         if (usuario.getEstado() == 0) {
             usuario.setEstado(1);
         }
+
         return usuarioRepository.save(usuario);
     }
 
@@ -59,7 +65,6 @@ public class UsuarioService implements IUsuarioService {
         }
         usuario.setCodigoUsuario(codigo);
 
-        // Si la contraseña cambió o se re-envía, hay que encriptarla
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 
         validarUsuario(usuario);
@@ -89,9 +94,6 @@ public class UsuarioService implements IUsuarioService {
         }
         if (usuario.getEmail() == null || usuario.getEmail().trim().isEmpty()) {
             throw new IllegalArgumentException("El correo electrónico es obligatorio.");
-        }
-        if (usuario.getRol() == null || usuario.getRol().trim().isEmpty()) {
-            throw new IllegalArgumentException("El rol del usuario es obligatorio.");
         }
     }
 }
