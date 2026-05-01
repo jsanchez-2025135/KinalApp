@@ -25,7 +25,6 @@ public class DetalleVentaController {
 
     @GetMapping("/venta/{codigoVenta}")
     public String listarPorVenta(@PathVariable Long codigoVenta, Model model) {
-        // Asegúrate de que este método exista en tu service
         model.addAttribute("detalles", detalleService.listarPorVenta(codigoVenta));
         model.addAttribute("codigoVenta", codigoVenta);
         return "detalles/lista-detalles";
