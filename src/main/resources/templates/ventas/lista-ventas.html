@@ -35,10 +35,16 @@
             <td th:text="${v.fechaVenta}"></td>
             <td th:text="${'Q' + v.total}"></td>
             <td>
-                <!-- Ruta corregida para ver detalles -->
                 <a th:href="@{/detalles/venta/{id}(id=${v.codigoVenta})}" class="btn btn-info btn-sm">
                     Ver Detalle
                 </a>
+                <!-- Solo ADMIN puede editar/eliminar ventas -->
+                <div th:if="${isAdmin}" class="mt-1">
+                    <a th:href="@{/ventas/editar/{id}(id=${v.codigoVenta})}" class="btn btn-warning btn-sm">Editar</a>
+                    <a th:href="@{/ventas/eliminar/{id}(id=${v.codigoVenta})}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('¿Eliminar esta venta?')">Eliminar</a>
+                </div>
             </td>
         </tr>
         </tbody>
