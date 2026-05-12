@@ -1,0 +1,553 @@
+/* Paleta: #164973 (Azul), #ec692c (Naranja), #c0a83d (Amarillo), #56af69 (Verde) */
+/* CSS unificado para las vistas de Ventas */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #c0a83d 0%, #b89a2e 100%);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    min-height: 100vh;
+    padding: 40px 0;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="10" cy="10" r="2" fill="rgba(255,255,255,0.08)"/><circle cx="30" cy="20" r="1.5" fill="rgba(255,255,255,0.08)"/><circle cx="50" cy="30" r="2" fill="rgba(255,255,255,0.08)"/><circle cx="70" cy="15" r="1.8" fill="rgba(255,255,255,0.08)"/><circle cx="85" cy="40" r="2.2" fill="rgba(255,255,255,0.08)"/><circle cx="20" cy="70" r="1.7" fill="rgba(255,255,255,0.08)"/><circle cx="60" cy="80" r="2.1" fill="rgba(255,255,255,0.08)"/><circle cx="40" cy="90" r="1.6" fill="rgba(255,255,255,0.08)"/><circle cx="80" cy="85" r="1.4" fill="rgba(255,255,255,0.08)"/></svg>') repeat;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== ESTILOS PARA FORMULARIO ========== */
+.card {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: white;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    background: linear-gradient(135deg, #164973 0%, #0d3557 100%);
+    color: white;
+    padding: 25px 30px;
+    border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(236,105,44,0.15) 0%, transparent 70%);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+.card-header h4 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.card-header h4::before {
+    content: "💰";
+    font-size: 1.8rem;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.card-body {
+    padding: 35px;
+}
+
+/* Campos del formulario */
+.mb-3 {
+    margin-bottom: 1.5rem !important;
+}
+
+label {
+    color: #164973;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+label::before {
+    content: "▸ ";
+    color: #ec692c;
+    font-size: 0.8rem;
+}
+
+.form-control, .form-select {
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 12px 16px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    width: 100%;
+    background: white;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #ec692c;
+    box-shadow: 0 0 0 4px rgba(236, 105, 44, 0.15);
+    outline: none;
+    transform: translateY(-2px);
+}
+
+.form-control:hover:not(:focus), .form-select:hover:not(:focus) {
+    border-color: #c0a83d;
+    background: #fefefe;
+}
+
+/* Inputs específicos */
+input[type="date"] {
+    cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(0.3);
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+input[type="number"]:focus {
+    border-color: #ec692c;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+input[type="number"]:hover::-webkit-inner-spin-button,
+input[type="number"]:hover::-webkit-outer-spin-button {
+    opacity: 1;
+}
+
+/* Botones del formulario */
+.btn-success {
+    background: linear-gradient(135deg, #56af69 0%, #4a9b5b 100%);
+    border: none;
+    padding: 12px 30px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 10px;
+    margin-right: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-success::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-success:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #4a9b5b 0%, #3d874c 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(86, 175, 105, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    border: none;
+    padding: 12px 30px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 10px;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #5a6268 0%, #495057 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(108, 117, 125, 0.3);
+}
+
+.btn-success:active, .btn-secondary:active {
+    transform: translateY(0);
+}
+
+/* ========== ESTILOS PARA TABLA DE VENTAS ========== */
+h2 {
+    color: white;
+    font-weight: 800;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #164973 0%, #0d3557 100%);
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 50px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    letter-spacing: 0.5px;
+}
+
+h2::before {
+    content: "📊 ";
+    font-size: 1.8rem;
+}
+
+/* Tabla de ventas */
+.table {
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table thead th {
+    background: linear-gradient(135deg, #164973 0%, #0d3557 100%);
+    color: white;
+    font-weight: 700;
+    border: none;
+    padding: 16px 15px;
+    font-size: 0.95rem;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.table thead th:first-child {
+    border-top-left-radius: 20px;
+}
+
+.table thead th:last-child {
+    border-top-right-radius: 20px;
+}
+
+.table tbody tr {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.table tbody tr:hover {
+    background: linear-gradient(90deg, rgba(192,168,61,0.08) 0%, rgba(236,105,44,0.08) 100%);
+    transform: scale(1.01);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.table td {
+    padding: 14px 15px;
+    vertical-align: middle;
+    color: #333;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+/* Columna de total */
+.table td:nth-child(3) {
+    font-weight: 700;
+    color: #ec692c;
+    font-size: 1.05rem;
+}
+
+.table td:nth-child(3)::before {
+    content: "Q";
+    margin-right: 3px;
+}
+
+/* Botón ver detalle */
+.btn-info {
+    background: linear-gradient(135deg, #164973 0%, #0d3557 100%);
+    border: none;
+    padding: 8px 20px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 8px;
+    color: white;
+}
+
+.btn-info:hover {
+    background: linear-gradient(135deg, #ec692c 0%, #d45a1f 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(236, 105, 44, 0.3);
+    color: white;
+}
+
+.btn-info:active {
+    transform: translateY(0);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 0;
+    }
+
+    .card {
+        margin: 0 15px;
+    }
+
+    .card-header {
+        padding: 18px 20px;
+    }
+
+    .card-header h4 {
+        font-size: 1.3rem;
+    }
+
+    .card-header h4::before {
+        font-size: 1.5rem;
+    }
+
+    .card-body {
+        padding: 25px;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+        margin: 0 15px 25px 15px;
+        display: block;
+        text-align: center;
+        padding: 10px 20px;
+    }
+
+    h2::before {
+        font-size: 1.4rem;
+    }
+
+    .btn-success, .btn-secondary {
+        padding: 10px 20px;
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .btn-success {
+        margin-bottom: 10px;
+    }
+
+    /* Tabla responsive */
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .table {
+        min-width: 500px;
+    }
+
+    .btn-info {
+        padding: 6px 15px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-body {
+        padding: 20px;
+    }
+
+    .form-control, .form-select {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+
+    label {
+        font-size: 0.85rem;
+    }
+
+    .table td, .table th {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+    }
+}
+
+/* ========== UTILIDADES ADICIONALES ========== */
+/* Alertas */
+.alert {
+    border-radius: 12px;
+    border: none;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    color: #155724;
+    border-left: 5px solid #56af69;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+    color: #721c24;
+    border-left: 5px solid #dc3545;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+    color: #0c5460;
+    border-left: 5px solid #164973;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #c0a83d 0%, #ec692c 100%);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #ec692c 0%, #164973 100%);
+}
+
+/* Tooltips */
+[title] {
+    position: relative;
+    cursor: help;
+}
+
+/* Badges y etiquetas */
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+
+/* Animación para elementos cargados */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.loading {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(to right, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
+    background-size: 1000px 100%;
+}
+
+/* Tarjeta de resumen (si se agrega) */
+.summary-card {
+    background: linear-gradient(135deg, #164973 0%, #0d3557 100%);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.summary-card h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.summary-card .amount {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Estilo para filas vacías */
+.table tbody tr:only-child td {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+    font-style: italic;
+}
+
+/* Efecto de carga para botones */
+.btn-success:disabled, .btn-secondary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}

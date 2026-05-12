@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/producto.css}">
+    <title>Gestión de Productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/menu}">KinalApp - Volver al Menú</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Lista de Productos</h2>
+        <a th:href="@{/productos/nuevo}" class="btn btn-primary">Agregar Nuevo Producto</a>
+    </div>
+
+    <table class="table table-striped table-hover shadow-sm">
+        <thead class="table-dark">
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Precio (Q)</th>
+            <th>Stock</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${productos}">
+            <td th:text="${p.codigoProducto}"></td>
+            <td th:text="${p.nombreProducto}"></td>
+            <td th:text="${p.precio}"></td>
+            <td th:text="${p.stock}"></td>
+            <td>
+                <span th:if="${p.estado == 1}" class="badge bg-success">Activo</span>
+                <span th:if="${p.estado == 0}" class="badge bg-danger">Inactivo</span>
+            </td>
+            <td>
+                <a th:href="@{/productos/editar/{id}(id=${p.codigoProducto})}" class="btn btn-warning btn-sm">Editar</a>
+                <a th:href="@{/productos/eliminar/{id}(id=${p.codigoProducto})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('¿Eliminar este producto?')">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
