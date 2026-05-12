@@ -2,6 +2,8 @@ package com.jesussanchez.kinalapp.controller;
 
 import com.jesussanchez.kinalapp.entity.Cliente;
 import com.jesussanchez.kinalapp.service.IClienteService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,16 +21,25 @@ public class ClienteController {
     }
 
     @GetMapping
-    public String listar(Model model) {
+    public String listar(Model model, Authentication authentication) {
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
         List<Cliente> clientes = clienteService.ListarTodos();
         model.addAttribute("clientes", clientes);
-        return "clientes/lista-clientes"; // Retorna el HTML
+        model.addAttribute("isAdmin", isAdmin);
+        return "clientes/lista-clientes";
     }
 
     @GetMapping("/nuevo")
-    public String mostrarFormularioNuevo(Model model) {
+    public String mostrarFormularioNuevo(Model model, Authentication authentication) {
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
         model.addAttribute("cliente", new Cliente());
         model.addAttribute("titulo", "Nuevo Cliente");
+        model.addAttribute("isAdmin", isAdmin);
+        model.addAttribute("canEdit", true); // Todos pueden crear
         return "clientes/formulario-cliente";
     }
 
@@ -39,22 +50,40 @@ public class ClienteController {
     }
 
     @GetMapping("/editar/{dpi}")
-    public String mostrarFormularioEditar(@PathVariable String dpi, Model model) {
+    public String mostrarFormularioEditar(@PathVariable String dpi, Model model, Authentication authentication) {
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        // Solo ADMIN puede editar
+        if (!isAdmin) {
+            return "redirect:/clientes?error=No tienes permisos para editar";
+        }
+
         return clienteService.buscarPorDPI(dpi)
                 .map(cliente -> {
                     model.addAttribute("cliente", cliente);
                     model.addAttribute("titulo", "Editar Cliente");
+                    model.addAttribute("isAdmin", isAdmin);
+                    model.addAttribute("canEdit", true);
                     return "clientes/formulario-cliente";
                 })
                 .orElse("redirect:/clientes");
     }
 
     @GetMapping("/eliminar/{dpi}")
-    public String eliminar(@PathVariable String dpi) {
+    public String eliminar(@PathVariable String dpi, Authentication authentication) {
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        // Solo ADMIN puede eliminar
+        if (!isAdmin) {
+            return "redirect:/clientes?error=No tienes permisos para eliminar";
+        }
+
         try {
             clienteService.eliminar(dpi);
         } catch (Exception e) {
-
+            // Log error
         }
         return "redirect:/clientes";
     }
