@@ -37,17 +37,31 @@ public class UsuarioService implements IUsuarioService {
     public Usuario guardar(Usuario usuario) {
         validarUsuario(usuario);
 
+        // Codificar la contraseña
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
 
-        if (usuarioRepository.count() == 0) {
+        // IMPORTANTE: Verificar si es el primer usuario
+        long totalUsuarios = usuarioRepository.count();
+        System.out.println("Total de usuarios en la BD: " + totalUsuarios);
+
+        if (totalUsuarios == 0) {
+            // El primer usuario es ADMIN
             usuario.setRol("ADMIN");
+            System.out.println("Primer usuario registrado como ADMIN");
         } else {
-            usuario.setRol("USER");
+            // Los demás son USER
+            if (usuario.getRol() == null || usuario.getRol().isEmpty()) {
+                usuario.setRol("USER");
+            }
+            System.out.println("Nuevo usuario registrado como: " + usuario.getRol());
         }
 
+        // Asegurar que el estado sea activo por defecto
         if (usuario.getEstado() == 0) {
             usuario.setEstado(1);
         }
+
+        System.out.println("Guardando usuario: " + usuario.getEmail() + " con rol: " + usuario.getRol());
 
         return usuarioRepository.save(usuario);
     }
@@ -65,7 +79,10 @@ public class UsuarioService implements IUsuarioService {
         }
         usuario.setCodigoUsuario(codigo);
 
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        // Solo codificar si la contraseña no está ya codificada
+        if (!usuario.getPassword().startsWith("$2a$")) {
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        }
 
         validarUsuario(usuario);
         return usuarioRepository.save(usuario);

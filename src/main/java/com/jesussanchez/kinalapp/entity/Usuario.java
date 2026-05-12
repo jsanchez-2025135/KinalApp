@@ -56,7 +56,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return this.email; // Importante: usar email como username
     }
 
     @Override
@@ -79,7 +79,7 @@ public class Usuario implements UserDetails {
         return this.estado == 1;
     }
 
-
+    // Getters y Setters
     public Long getCodigoUsuario() {
         return codigoUsuario;
     }
