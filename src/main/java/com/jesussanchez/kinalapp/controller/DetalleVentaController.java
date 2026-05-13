@@ -4,6 +4,7 @@ import com.jesussanchez.kinalapp.entity.DetalleVenta;
 import com.jesussanchez.kinalapp.service.IDetalleVentaService;
 import com.jesussanchez.kinalapp.service.IVentaService;
 import com.jesussanchez.kinalapp.service.IProductoService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,20 +23,26 @@ public class DetalleVentaController {
         this.productoService = productoService;
     }
 
-
     @GetMapping("/venta/{codigoVenta}")
-    public String listarPorVenta(@PathVariable Long codigoVenta, Model model) {
-        // Asegúrate de que este método exista en tu service
+    public String listarPorVenta(@PathVariable Long codigoVenta, Model model, Authentication authentication) {
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
         model.addAttribute("detalles", detalleService.listarPorVenta(codigoVenta));
         model.addAttribute("codigoVenta", codigoVenta);
+        model.addAttribute("isAdmin", isAdmin);
         return "detalles/lista-detalles";
     }
 
     @GetMapping("/nuevo/{codigoVenta}")
-    public String mostrarFormulario(@PathVariable Long codigoVenta, Model model) {
+    public String mostrarFormulario(@PathVariable Long codigoVenta, Model model, Authentication authentication) {
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
         model.addAttribute("detalle", new DetalleVenta());
         model.addAttribute("codigoVenta", codigoVenta);
         model.addAttribute("productos", productoService.ListarTodos());
+        model.addAttribute("isAdmin", isAdmin);
         return "detalles/formulario-detalle";
     }
 
@@ -44,5 +51,45 @@ public class DetalleVentaController {
         ventaService.buscarPorCodigo(codigoVenta).ifPresent(detalle::setVenta);
         detalleService.guardar(detalle);
         return "redirect:/detalles/venta/" + codigoVenta;
+    }
+
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable Long id, Model model, Authentication authentication) {
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!isAdmin) {
+            return "redirect:/detalles/venta/" + id + "?error=No tienes permisos para editar";
+        }
+
+        return detalleService.buscarPorCodigo(id)
+                .map(detalle -> {
+                    model.addAttribute("detalle", detalle);
+                    model.addAttribute("productos", productoService.ListarTodos());
+                    model.addAttribute("codigoVenta", detalle.getVenta().getCodigoVenta());
+                    model.addAttribute("isAdmin", isAdmin);
+                    return "detalles/formulario-detalle";
+                })
+                .orElse("redirect:/ventas");
+    }
+
+    @GetMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable Long id, Authentication authentication) {
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!isAdmin) {
+            return "redirect:/ventas?error=No tienes permisos para eliminar";
+        }
+
+        try {
+            Long codigoVenta = detalleService.buscarPorCodigo(id)
+                    .map(d -> d.getVenta().getCodigoVenta())
+                    .orElse(null);
+            detalleService.eliminar(id);
+            return "redirect:/detalles/venta/" + codigoVenta;
+        } catch (Exception e) {
+            return "redirect:/ventas";
+        }
     }
 }

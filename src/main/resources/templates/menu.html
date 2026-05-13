@@ -41,7 +41,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <!-- Solo ADMIN puede ver el módulo de Usuarios -->
+        <div class="col-md-4" th:if="${isAdmin}">
             <div class="card h-100 text-center shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title">Usuarios</h5>
@@ -58,6 +59,7 @@
                     <a href="/ventas" class="btn btn-success">Ir a Ventas</a>
                 </div>
             </div>
+        </div>
     </div>
 </div>
 </body>

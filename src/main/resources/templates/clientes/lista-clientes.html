@@ -16,6 +16,7 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>Lista de Clientes</h2>
+        <!-- Botón Nuevo visible para todos los usuarios autenticados -->
         <a th:href="@{/clientes/nuevo}" class="btn btn-primary">Agregar Nuevo Cliente</a>
     </div>
 
@@ -41,10 +42,16 @@
                 <span th:if="${c.estado == 0}" class="badge bg-danger">Inactivo</span>
             </td>
             <td>
-                <a th:href="@{/clientes/editar/{id}(id=${c.dpiCliente})}" class="btn btn-warning btn-sm">Editar</a>
-                <a th:href="@{/clientes/eliminar/{id}(id=${c.dpiCliente})}"
-                   class="btn btn-danger btn-sm"
-                   onclick="return confirm('¿Estás seguro de eliminar este cliente?')">Eliminar</a>
+                <!-- Solo ADMIN puede editar y eliminar -->
+                <div th:if="${isAdmin}">
+                    <a th:href="@{/clientes/editar/{id}(id=${c.dpiCliente})}" class="btn btn-warning btn-sm">Editar</a>
+                    <a th:href="@{/clientes/eliminar/{id}(id=${c.dpiCliente})}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('¿Estás seguro de eliminar este cliente?')">Eliminar</a>
+                </div>
+                <div th:unless="${isAdmin}">
+                    <span class="text-muted">Solo lectura</span>
+                </div>
             </td>
         </tr>
         </tbody>
