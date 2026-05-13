@@ -67,7 +67,6 @@ public class ProductoController {
         boolean isAdmin = authentication.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
-        // Solo ADMIN puede eliminar
         if (!isAdmin) {
             return "redirect:/productos?error=No tienes permisos para eliminar";
         }

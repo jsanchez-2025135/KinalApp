@@ -45,9 +45,7 @@ public class LoginController {
 
     @PostMapping("/registro")
     public String registrarUsuario(@ModelAttribute Usuario usuario) {
-        // NO asignar rol aquí, el Service lo hará automáticamente
-        // El primer usuario será ADMIN, los demás USER
-        usuario.setEstado(1); // Solo asignamos estado activo
+        usuario.setEstado(1); //
         usuarioService.guardar(usuario);
         return "redirect:/login?registrado=true";
     }
