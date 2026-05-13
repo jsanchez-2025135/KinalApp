@@ -13,7 +13,6 @@
             <h4>Registrar Venta</h4>
         </div>
         <div class="card-body">
-            <!-- IMPORTANTE: th:action debe apuntar a /ventas/guardar -->
             <form th:action="@{/ventas/guardar}" th:object="${venta}" method="post">
                 <div class="mb-3">
                     <label>Fecha</label>
