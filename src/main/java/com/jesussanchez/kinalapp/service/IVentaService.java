@@ -18,7 +18,5 @@ public interface IVentaService {
 
     void eliminar(Long codigo);
 
-    Venta anular(Long codigo);
-
     boolean existePorCodigo(Long codigo);
 }
