@@ -2,17 +2,14 @@ package com.jesussanchez.kinalapp.service;
 
 import com.jesussanchez.kinalapp.entity.Usuario;
 import com.jesussanchez.kinalapp.repository.UsuarioRepository;
-import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
-@Validated
 public class UsuarioService implements IUsuarioService {
 
     private final UsuarioRepository usuarioRepository;
@@ -36,7 +33,7 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public Usuario guardar(@Valid Usuario usuario) {
+    public Usuario guardar(Usuario usuario) {
         usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         long totalUsuarios = usuarioRepository.count();
         if (totalUsuarios == 0) {
@@ -59,7 +56,7 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public Usuario actualizar(Long codigo, @Valid Usuario usuario) {
+    public Usuario actualizar(Long codigo, Usuario usuario) {
         if (!usuarioRepository.existsById(codigo)) {
             throw new RuntimeException("Usuario no encontrado");
         }

@@ -6,16 +6,13 @@ import com.jesussanchez.kinalapp.entity.Venta;
 import com.jesussanchez.kinalapp.repository.DetalleVentaRepository;
 import com.jesussanchez.kinalapp.repository.ProductoRepository;
 import com.jesussanchez.kinalapp.repository.VentaRepository;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Validated
 public class DetalleVentaService implements IDetalleVentaService {
 
     private final DetalleVentaRepository detalleRepository;
@@ -36,7 +33,7 @@ public class DetalleVentaService implements IDetalleVentaService {
 
     @Override
     @Transactional
-    public DetalleVenta guardar(@Valid DetalleVenta detalle) {
+    public DetalleVenta guardar(DetalleVenta detalle) {
         Producto producto = productoRepository.findById(detalle.getProducto().getCodigoProducto())
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
         if (producto.getStock() < detalle.getCantidad()) {

@@ -2,16 +2,13 @@ package com.jesussanchez.kinalapp.service;
 
 import com.jesussanchez.kinalapp.entity.Producto;
 import com.jesussanchez.kinalapp.repository.ProductoRepository;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
-@Validated
 public class ProductoService implements IProductoService {
 
     private final ProductoRepository productoRepository;
@@ -33,7 +30,7 @@ public class ProductoService implements IProductoService {
     }
 
     @Override
-    public Producto guardar(@Valid Producto producto) {
+    public Producto guardar(Producto producto) {
         if (producto.getEstado() == 0) {
             producto.setEstado(1);
         }
@@ -47,7 +44,7 @@ public class ProductoService implements IProductoService {
     }
 
     @Override
-    public Producto actualizar(Long codigo, @Valid Producto producto) {
+    public Producto actualizar(Long codigo, Producto producto) {
         if (!productoRepository.existsById(codigo)) {
             throw new RuntimeException("El producto con código " + codigo + " no existe.");
         }

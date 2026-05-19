@@ -6,16 +6,13 @@ import com.jesussanchez.kinalapp.entity.Venta;
 import com.jesussanchez.kinalapp.repository.ClienteRepository;
 import com.jesussanchez.kinalapp.repository.UsuarioRepository;
 import com.jesussanchez.kinalapp.repository.VentaRepository;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
-@Validated
 public class VentaService implements IVentaService {
 
     private final VentaRepository ventaRepository;
@@ -40,7 +37,7 @@ public class VentaService implements IVentaService {
     }
 
     @Override
-    public Venta guardar(@Valid Venta venta) {
+    public Venta guardar(Venta venta) {
         Cliente cliente = clienteRepository.findById(venta.getCliente().getDpiCliente())
                 .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
         Usuario usuario = usuarioRepository.findById(venta.getUsuario().getCodigoUsuario())
@@ -66,7 +63,7 @@ public class VentaService implements IVentaService {
     }
 
     @Override
-    public Venta actualizar(Long codigo, @Valid Venta venta) {
+    public Venta actualizar(Long codigo, Venta venta) {
         if (!ventaRepository.existsById(codigo)) {
             throw new RuntimeException("La Venta no se encontro con codigo " + codigo);
         }

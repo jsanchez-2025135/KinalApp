@@ -2,16 +2,13 @@ package com.jesussanchez.kinalapp.service;
 
 import com.jesussanchez.kinalapp.entity.Cliente;
 import com.jesussanchez.kinalapp.repository.ClienteRepository;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
-@Validated
 public class ClienteService implements IClienteService {
 
     private final ClienteRepository clienteRepository;
@@ -32,7 +29,7 @@ public class ClienteService implements IClienteService {
     }
 
     @Override
-    public Cliente guardar(@Valid Cliente cliente) {
+    public Cliente guardar(Cliente cliente) {
         if (cliente.getEstado() == 0) {
             cliente.setEstado(1);
         }
@@ -46,7 +43,7 @@ public class ClienteService implements IClienteService {
     }
 
     @Override
-    public Cliente actualizar(String dpi, @Valid Cliente cliente) {
+    public Cliente actualizar(String dpi, Cliente cliente) {
         if (!clienteRepository.existsById(dpi)) {
             throw new RuntimeException("Cliente no se encontro con DPI " + dpi);
         }
