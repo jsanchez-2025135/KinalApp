@@ -2,16 +2,17 @@ package com.jesussanchez.kinalapp.service;
 
 import com.jesussanchez.kinalapp.entity.Cliente;
 import com.jesussanchez.kinalapp.repository.ClienteRepository;
-
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.validation.annotation.Validated;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
-public class ClienteService implements IClienteService{
+@Validated
+public class ClienteService implements IClienteService {
 
     private final ClienteRepository clienteRepository;
 
@@ -20,7 +21,7 @@ public class ClienteService implements IClienteService{
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Cliente> ListarTodos() {
         return clienteRepository.findAll();
     }
@@ -31,10 +32,10 @@ public class ClienteService implements IClienteService{
     }
 
     @Override
-    public Cliente guardar(Cliente cliente) {
-        validarCliente(cliente);
-        if (cliente.getEstado()==0)
+    public Cliente guardar(@Valid Cliente cliente) {
+        if (cliente.getEstado() == 0) {
             cliente.setEstado(1);
+        }
         return clienteRepository.save(cliente);
     }
 
@@ -42,23 +43,22 @@ public class ClienteService implements IClienteService{
     @Transactional(readOnly = true)
     public Optional<Cliente> buscarPorDPI(String dpi) {
         return clienteRepository.findById(dpi);
-
     }
 
     @Override
-    public Cliente actualizar(String dpi, Cliente cliente) {
-        if(!clienteRepository.existsById(dpi)){
+    public Cliente actualizar(String dpi, @Valid Cliente cliente) {
+        if (!clienteRepository.existsById(dpi)) {
             throw new RuntimeException("Cliente no se encontro con DPI " + dpi);
-            }
-            cliente.setDpiCliente(dpi);
-            validarCliente(cliente);
+        }
+        cliente.setDpiCliente(dpi);
         return clienteRepository.save(cliente);
     }
 
     @Override
     public void eliminar(String dpi) {
-        if(!clienteRepository.existsById(dpi))
-            throw new RuntimeException("El cliente no se encontro con el DPI " +dpi);
+        if (!clienteRepository.existsById(dpi)) {
+            throw new RuntimeException("El cliente no se encontro con el DPI " + dpi);
+        }
         clienteRepository.deleteById(dpi);
     }
 
@@ -66,27 +66,5 @@ public class ClienteService implements IClienteService{
     @Transactional(readOnly = true)
     public boolean existePorDPI(String dpi) {
         return clienteRepository.existsById(dpi);
-
     }
-
-    private void validarCliente(Cliente cliente) {
-
-        if (cliente.getDpiCliente() == null || cliente.getDpiCliente().trim().isEmpty()) {
-
-            throw new IllegalArgumentException("El DPI es un dato obligatorio");
-        }
-
-        if (cliente.getNombreCliente()== null || cliente.getNombreCliente().trim().isEmpty()){
-            throw new IllegalArgumentException("El nombre es un dato obligatorio");
-        }
-
-        if (cliente.getApellidoCliente()== null || cliente.getApellidoCliente().trim().isEmpty()){
-            throw new IllegalArgumentException("El apellido es un dato obligatorio");
-        }
-
-
-
-    }
-
 }
-
