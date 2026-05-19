@@ -88,4 +88,25 @@ public class ClienteController {
         }
         return "redirect:/clientes";
     }
+
+    @GetMapping("/cambiar-estado/{dpi}")
+    public String cambiarEstado(@PathVariable String dpi, Authentication authentication, RedirectAttributes redirectAttributes) {
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+
+        if (!isAdmin) {
+            return "redirect:/clientes?error=No tienes permisos para cambiar el estado";
+        }
+
+        try {
+            Cliente cliente = clienteService.cambiarEstado(dpi);
+            String nuevoEstado = cliente.getEstado() == 1 ? "activado" : "desactivado";
+            redirectAttributes.addFlashAttribute("mensaje", "Cliente " + nuevoEstado + " correctamente");
+            redirectAttributes.addFlashAttribute("tipoMensaje", "success");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("mensaje", e.getMessage());
+            redirectAttributes.addFlashAttribute("tipoMensaje", "danger");
+        }
+        return "redirect:/clientes";
+    }
 }

@@ -19,4 +19,6 @@ public interface IClienteService {
     void eliminar(String dpi);
 
     boolean existePorDPI(String dpi);
+
+    Cliente cambiarEstado(String dpi);
 }

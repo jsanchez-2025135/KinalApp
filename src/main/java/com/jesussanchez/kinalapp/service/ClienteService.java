@@ -62,7 +62,6 @@ public class ClienteService implements IClienteService {
             throw new RuntimeException("El cliente no se encontro con el DPI " + dpi);
         }
 
-
         List<Venta> ventasCliente = ventaRepository.findByClienteDpiCliente(dpi);
 
         if (!ventasCliente.isEmpty()) {
@@ -73,7 +72,6 @@ public class ClienteService implements IClienteService {
             throw new RuntimeException("El cliente tiene ventas asociadas. No se puede eliminar, solo se ha desactivado.");
         }
 
-
         clienteRepository.deleteById(dpi);
     }
 
@@ -81,5 +79,19 @@ public class ClienteService implements IClienteService {
     @Transactional(readOnly = true)
     public boolean existePorDPI(String dpi) {
         return clienteRepository.existsById(dpi);
+    }
+
+    @Override
+    public Cliente cambiarEstado(String dpi) {
+        Cliente cliente = clienteRepository.findById(dpi)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado con DPI: " + dpi));
+
+        if (cliente.getEstado() == 1) {
+            cliente.setEstado(0);
+        } else {
+            cliente.setEstado(1);
+        }
+
+        return clienteRepository.save(cliente);
     }
 }
