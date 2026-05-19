@@ -26,6 +26,7 @@
             <th>ID</th>
             <th>Fecha</th>
             <th>Total</th>
+            <th>Estado</th>
             <th>Acciones</th>
         </tr>
         </thead>
@@ -35,10 +36,23 @@
             <td th:text="${v.fechaVenta}"></td>
             <td th:text="${'Q' + v.total}"></td>
             <td>
-                <!-- Ruta corregida para ver detalles -->
+                <span th:if="${v.estado == 1}" class="badge bg-success">Activa</span>
+                <span th:if="${v.estado == 0}" class="badge bg-danger">Anulada</span>
+            </td>
+            <td>
+
                 <a th:href="@{/detalles/venta/{id}(id=${v.codigoVenta})}" class="btn btn-info btn-sm">
                     Ver Detalle
                 </a>
+
+
+                <div th:if="${isAdmin and v.estado == 1}" class="mt-1">
+                    <a th:href="@{/ventas/anular/{id}(id=${v.codigoVenta})}"
+                       class="btn btn-warning btn-sm"
+                       onclick="return confirm('¿Anular esta venta? Se mantendrá el registro para auditoría.')">
+                        Anular Venta
+                    </a>
+                </div>
             </td>
         </tr>
         </tbody>

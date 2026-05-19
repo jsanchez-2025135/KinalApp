@@ -41,10 +41,15 @@
                 <span th:if="${p.estado == 0}" class="badge bg-danger">Inactivo</span>
             </td>
             <td>
-                <a th:href="@{/productos/editar/{id}(id=${p.codigoProducto})}" class="btn btn-warning btn-sm">Editar</a>
-                <a th:href="@{/productos/eliminar/{id}(id=${p.codigoProducto})}"
-                   class="btn btn-danger btn-sm"
-                   onclick="return confirm('¿Eliminar este producto?')">Eliminar</a>
+                <div th:if="${isAdmin}">
+                    <a th:href="@{/productos/editar/{id}(id=${p.codigoProducto})}" class="btn btn-warning btn-sm">Editar</a>
+                    <a th:href="@{/productos/eliminar/{id}(id=${p.codigoProducto})}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('¿Eliminar este producto?')">Eliminar</a>
+                </div>
+                <div th:unless="${isAdmin}">
+                    <span class="text-muted">Solo lectura</span>
+                </div>
             </td>
         </tr>
         </tbody>

@@ -17,13 +17,20 @@
 
         <h3>Iniciar Sesión</h3>
 
-        <div th:if="${error}" class="alerta-error" th:text="${error}"></div>
-        <div th:if="${param.registrado}" class="alerta-exito">Registro exitoso</div>
+        <div th:if="${param.error}" class="alerta-error">
+            Credenciales inválidas. Verifica tu email y contraseña.
+        </div>
+        <div th:if="${param.logout}" class="alerta-exito">
+            Has cerrado sesión exitosamente.
+        </div>
+        <div th:if="${param.registrado}" class="alerta-exito">
+            Registro exitoso. Ahora puedes iniciar sesión.
+        </div>
 
         <form th:action="@{/login}" method="post">
             <div class="campo">
                 <label>Correo Electrónico</label>
-                <input type="email" name="email" required>
+                <input type="email" name="email" required autofocus>
             </div>
             <div class="campo">
                 <label>Contraseña</label>

@@ -25,7 +25,6 @@
             <th>ID</th>
             <th>Username</th>
             <th>Email</th>
-            <th>Rol</th>
             <th>Estado</th>
             <th>Acciones</th>
         </tr>
@@ -35,7 +34,6 @@
             <td th:text="${u.codigoUsuario}"></td>
             <td th:text="${u.username}"></td>
             <td th:text="${u.email}"></td>
-            <td th:text="${u.rol}"></td>
             <td>
                 <span th:if="${u.estado == 1}" class="badge bg-success">Activo</span>
                 <span th:if="${u.estado == 0}" class="badge bg-danger">Inactivo</span>
@@ -46,7 +44,7 @@
                    class="btn btn-danger btn-sm"
                    onclick="return confirm('¿Eliminar este usuario?')">Eliminar</a>
             </td>
-        </tr>
+            </tr>
         </tbody>
     </table>
 </div>
