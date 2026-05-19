@@ -14,7 +14,7 @@ public class Cliente {
     @Id
     @Column(name = "dpi_cliente")
     @NotBlank(message = "El DPI es obligatorio")
-    @Size(min = 8, max = 20, message = "El DPI debe tener entre 8 y 20 caracteres")
+    @Size(min = 13, max = 13, message = "El DPI debe tener exactamente 13 caracteres")
     private String dpiCliente;
 
     @Column(nullable = false)
