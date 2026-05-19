@@ -1,7 +1,9 @@
 package com.jesussanchez.kinalapp.entity;
 
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -12,25 +14,35 @@ public class Venta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "codigo_venta")
     private Long codigoVenta;
-    @Column(name = "fecha_venta", nullable = false )
-    private LocalDate fechaVenta;
-    @Column( nullable = false, precision = 10, scale = 2)
-    private BigDecimal total;
-    @Column (nullable = false)
-    private int estado;
 
-    public Venta(){
-    }
+    @Column(name = "fecha_venta", nullable = false)
+    @NotNull(message = "La fecha de venta es obligatoria")
+    @PastOrPresent(message = "La fecha no puede ser futura")
+    private LocalDate fechaVenta;
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    @NotNull(message = "El total es obligatorio")
+    @Positive(message = "El total debe ser mayor a cero")
+    private BigDecimal total;
+
+    @Column(nullable = false)
+    @NotNull(message = "El estado es obligatorio")
+    private int estado;
 
     @ManyToOne
     @JoinColumn(name = "clientes_dpi_cliente", nullable = false)
+    @NotNull(message = "Debe seleccionar un cliente")
     private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "usuarios_codigo_usuario", nullable = false)
+    @NotNull(message = "Debe seleccionar un usuario")
     private Usuario usuario;
 
-    public Venta(Long codigoVenta, LocalDate fechaVenta, BigDecimal total, int estado, Cliente cliente, Usuario usuario){
+    public Venta() {
+    }
+
+    public Venta(Long codigoVenta, LocalDate fechaVenta, BigDecimal total, int estado, Cliente cliente, Usuario usuario) {
         this.codigoVenta = codigoVenta;
         this.fechaVenta = fechaVenta;
         this.total = total;
@@ -39,51 +51,51 @@ public class Venta {
         this.usuario = usuario;
     }
 
-    public Long getCodigoVenta()
-        {return codigoVenta;
+    public Long getCodigoVenta() {
+        return codigoVenta;
     }
 
-    public void setCodigoVenta(Long codigoVenta)
-        {this.codigoVenta = codigoVenta;
+    public void setCodigoVenta(Long codigoVenta) {
+        this.codigoVenta = codigoVenta;
     }
 
-    public LocalDate getFechaVenta()
-        {return fechaVenta;
+    public LocalDate getFechaVenta() {
+        return fechaVenta;
     }
 
-    public void setFechaVenta(LocalDate fechaVenta)
-        {this.fechaVenta = fechaVenta;
+    public void setFechaVenta(LocalDate fechaVenta) {
+        this.fechaVenta = fechaVenta;
     }
 
-    public BigDecimal getTotal()
-        {return total;
+    public BigDecimal getTotal() {
+        return total;
     }
 
-    public void setTotal(BigDecimal total)
-        {this.total = total;
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
-    public int getEstado()
-        {return estado;
+    public int getEstado() {
+        return estado;
     }
 
-    public void setEstado(int estado)
-        {this.estado = estado;
+    public void setEstado(int estado) {
+        this.estado = estado;
     }
 
-    public Cliente getCliente()
-        {return cliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setCliente(Cliente cliente)
-        {this.cliente = cliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public Usuario getUsuario()
-        {return usuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuario(Usuario usuario)
-        {this.usuario = usuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

@@ -13,29 +13,32 @@
             <h4>Registrar Venta</h4>
         </div>
         <div class="card-body">
-            <!-- IMPORTANTE: th:action debe apuntar a /ventas/guardar -->
             <form th:action="@{/ventas/guardar}" th:object="${venta}" method="post">
                 <div class="mb-3">
                     <label>Fecha</label>
-                    <input type="date" th:field="*{fechaVenta}" class="form-control" required>
+                    <input type="date" th:field="*{fechaVenta}" class="form-control" th:classappend="${#fields.hasErrors('fechaVenta')} ? 'is-invalid' : ''">
+                    <div th:if="${#fields.hasErrors('fechaVenta')}" th:errors="*{fechaVenta}" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3">
                     <label>Cliente</label>
-                    <select th:field="*{cliente.dpiCliente}" class="form-select" required>
+                    <select th:field="*{cliente.dpiCliente}" class="form-select" th:classappend="${#fields.hasErrors('cliente')} ? 'is-invalid' : ''">
                         <option value="">Seleccione un cliente</option>
                         <option th:each="c : ${clientes}" th:value="${c.dpiCliente}" th:text="${c.nombreCliente}"></option>
                     </select>
+                    <div th:if="${#fields.hasErrors('cliente')}" th:errors="*{cliente}" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3">
                     <label>Usuario</label>
-                    <select th:field="*{usuario.codigoUsuario}" class="form-select" required>
+                    <select th:field="*{usuario.codigoUsuario}" class="form-select" th:classappend="${#fields.hasErrors('usuario')} ? 'is-invalid' : ''">
                         <option value="">Seleccione un usuario</option>
                         <option th:each="u : ${usuarios}" th:value="${u.codigoUsuario}" th:text="${u.username}"></option>
                     </select>
+                    <div th:if="${#fields.hasErrors('usuario')}" th:errors="*{usuario}" class="invalid-feedback"></div>
                 </div>
                 <div class="mb-3">
                     <label>Total</label>
-                    <input type="number" step="0.01" th:field="*{total}" class="form-control" required>
+                    <input type="number" step="0.01" th:field="*{total}" class="form-control" th:classappend="${#fields.hasErrors('total')} ? 'is-invalid' : ''">
+                    <div th:if="${#fields.hasErrors('total')}" th:errors="*{total}" class="invalid-feedback"></div>
                 </div>
                 <button type="submit" class="btn btn-success">Finalizar Venta</button>
                 <a th:href="@{/ventas}" class="btn btn-secondary">Cancelar</a>
