@@ -13,44 +13,29 @@
             <h4>Agregar Producto a Venta</h4>
         </div>
         <div class="card-body">
-            <form th:action="@{/detalles/guardar/{id}(id=${codigoVenta})}"
-                  th:object="${detalle}"
-                  method="post">
-
+            <form th:action="@{/detalles/guardar/{id}(id=${codigoVenta})}" th:object="${detalle}" method="post">
                 <div class="mb-3">
                     <label class="form-label">Seleccionar Producto</label>
-                    <select th:field="*{producto.codigoProducto}" class="form-select" required>
+                    <select th:field="*{producto.codigoProducto}" class="form-select" th:classappend="${#fields.hasErrors('producto')} ? 'is-invalid' : ''" required>
                         <option value="">-- Seleccione un producto --</option>
-                        <option th:each="p : ${productos}"
-                                th:value="${p.codigoProducto}"
-                                th:text="${p.nombreProducto + ' (Stock: ' + p.stock + ' - Q' + p.precio + ')'}">
-                        </option>
+                        <option th:each="p : ${productos}" th:value="${p.codigoProducto}" th:text="${p.nombreProducto + ' (Stock: ' + p.stock + ' - Q' + p.precio + ')'}"></option>
                     </select>
-                    <small class="text-muted">El precio se tomará automáticamente del producto</small>
+                    <div th:if="${#fields.hasErrors('producto')}" th:errors="*{producto}" class="invalid-feedback"></div>
                 </div>
-
                 <div class="mb-3">
                     <label class="form-label">Cantidad</label>
-                    <input type="number" th:field="*{cantidad}" class="form-control" required min="1" step="1">
-                    <small class="text-muted">Ingrese la cantidad deseada</small>
+                    <input type="number" th:field="*{cantidad}" class="form-control" th:classappend="${#fields.hasErrors('cantidad')} ? 'is-invalid' : ''" required min="1" step="1">
+                    <div th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}" class="invalid-feedback"></div>
                 </div>
-
                 <input type="hidden" th:field="*{precioUnitario}">
                 <input type="hidden" th:field="*{subtotal}">
-
                 <div class="d-flex justify-content-between mt-4">
                     <button type="submit" class="btn btn-success">Agregar Producto</button>
-                    <a th:href="@{/detalles/venta/{id}(id=${codigoVenta})}" class="btn btn-secondary">
-                        Cancelar
-                    </a>
+                    <a th:href="@{/detalles/venta/{id}(id=${codigoVenta})}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-<script>
-
-</script>
 </body>
 </html>
