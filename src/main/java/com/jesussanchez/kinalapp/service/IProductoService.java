@@ -1,8 +1,6 @@
 package com.jesussanchez.kinalapp.service;
 
 import com.jesussanchez.kinalapp.entity.Producto;
-import com.jesussanchez.kinalapp.entity.Usuario;
-
 import java.util.List;
 import java.util.Optional;
 
