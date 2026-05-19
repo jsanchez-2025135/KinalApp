@@ -17,25 +17,28 @@
                 <div class="card-body">
                     <form th:action="@{/productos/guardar}" th:object="${producto}" method="post">
                         <input type="hidden" th:field="*{codigoProducto}">
-
                         <div class="mb-3">
                             <label class="form-label">Nombre del Producto</label>
-                            <input type="text" th:field="*{nombreProducto}" class="form-control" required>
+                            <input type="text" th:field="*{nombreProducto}" class="form-control" th:classappend="${#fields.hasErrors('nombreProducto')} ? 'is-invalid' : ''">
+                            <div th:if="${#fields.hasErrors('nombreProducto')}" th:errors="*{nombreProducto}" class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Precio</label>
-                            <input type="number" step="0.01" th:field="*{precio}" class="form-control" required>
+                            <input type="number" step="0.01" th:field="*{precio}" class="form-control" th:classappend="${#fields.hasErrors('precio')} ? 'is-invalid' : ''">
+                            <div th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}" class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Stock inicial</label>
-                            <input type="number" th:field="*{stock}" class="form-control" required>
+                            <input type="number" th:field="*{stock}" class="form-control" th:classappend="${#fields.hasErrors('stock')} ? 'is-invalid' : ''">
+                            <div th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}" class="invalid-feedback"></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Estado</label>
-                            <select th:field="*{estado}" class="form-select">
+                            <select th:field="*{estado}" class="form-select" th:classappend="${#fields.hasErrors('estado')} ? 'is-invalid' : ''">
                                 <option value="1">Activo</option>
                                 <option value="0">Inactivo</option>
                             </select>
+                            <div th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}" class="invalid-feedback"></div>
                         </div>
                         <div class="d-flex justify-content-between">
                             <a th:href="@{/productos}" class="btn btn-secondary">Cancelar</a>
