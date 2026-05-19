@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 @Controller
 @RequestMapping("/detalles")
 public class DetalleVentaController {
@@ -28,8 +31,18 @@ public class DetalleVentaController {
         boolean isAdmin = authentication.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
-        model.addAttribute("detalles", detalleService.listarPorVenta(codigoVenta));
+
+        List<DetalleVenta> detalles = detalleService.listarPorVenta(codigoVenta);
+
+
+        BigDecimal totalVenta = detalles.stream()
+                .map(DetalleVenta::getSubtotal)
+                .filter(subtotal -> subtotal != null)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        model.addAttribute("detalles", detalles);
         model.addAttribute("codigoVenta", codigoVenta);
+        model.addAttribute("totalVenta", totalVenta);
         model.addAttribute("isAdmin", isAdmin);
         return "detalles/lista-detalles";
     }

@@ -65,41 +65,4 @@ public class VentaController {
                 .orElse("redirect:/ventas");
     }
 
-    @GetMapping("/editar/{id}")
-    public String editar(@PathVariable Long id, Model model, Authentication authentication) {
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-
-        if (!isAdmin) {
-            return "redirect:/ventas?error=No tienes permisos para editar";
-        }
-
-        return ventaService.buscarPorCodigo(id)
-                .map(venta -> {
-                    model.addAttribute("venta", venta);
-                    model.addAttribute("clientes", clienteService.ListarTodos());
-                    model.addAttribute("usuarios", usuarioService.ListarTodos());
-                    model.addAttribute("titulo", "Editar Venta");
-                    model.addAttribute("isAdmin", isAdmin);
-                    return "ventas/formulario-venta";
-                })
-                .orElse("redirect:/ventas");
-    }
-
-    @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable Long id, Authentication authentication) {
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
-
-        if (!isAdmin) {
-            return "redirect:/ventas?error=No tienes permisos para eliminar";
-        }
-
-        try {
-            ventaService.eliminar(id);
-        } catch (Exception e) {
-            // Log error
-        }
-        return "redirect:/ventas";
-    }
 }

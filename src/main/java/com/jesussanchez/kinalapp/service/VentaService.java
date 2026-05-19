@@ -95,6 +95,19 @@ public class VentaService implements IVentaService{
             throw new RuntimeException("La Venta no se encontro con el codigo " +codigo);
 
         ventaRepository.deleteById(codigo);
+
+    }
+
+    @Override
+    @Transactional
+    public Venta anular(Long codigo) {
+        Venta venta = ventaRepository.findById(codigo)
+                .orElseThrow(() -> new RuntimeException("Venta no encontrada con código " + codigo));
+
+        venta.setEstado(0);
+
+
+        return ventaRepository.save(venta);
     }
 
     private void validarVenta(Venta venta) {
