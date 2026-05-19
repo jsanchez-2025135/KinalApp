@@ -1,10 +1,13 @@
 package com.jesussanchez.kinalapp.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -18,18 +21,26 @@ public class Usuario implements UserDetails {
     private Long codigoUsuario;
 
     @Column(nullable = false)
+    @NotBlank(message = "El nombre de usuario es obligatorio")
+    @Size(min = 3, max = 50, message = "El nombre debe tener entre 3 y 50 caracteres")
     private String username;
 
     @Column(nullable = false)
+    @NotBlank(message = "La contraseña es obligatoria")
+    @Size(min = 4, message = "La contraseña debe tener al menos 4 caracteres")
     private String password;
 
     @Column(nullable = false, unique = true)
+    @NotBlank(message = "El correo electrónico es obligatorio")
+    @Email(message = "Debe ingresar un correo electrónico válido")
     private String email;
 
     @Column(nullable = false)
+    @NotBlank(message = "El rol es obligatorio")
     private String rol;
 
     @Column(nullable = false)
+    @NotNull(message = "El estado es obligatorio")
     private int estado;
 
     public Usuario() {
@@ -56,7 +67,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email; // Importante: usar email como username
+        return this.email;
     }
 
     @Override
@@ -79,7 +90,6 @@ public class Usuario implements UserDetails {
         return this.estado == 1;
     }
 
-    // Getters y Setters
     public Long getCodigoUsuario() {
         return codigoUsuario;
     }
