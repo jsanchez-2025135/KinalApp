@@ -1,9 +1,12 @@
 package com.jesussanchez.kinalapp.service;
 
 import com.jesussanchez.kinalapp.entity.Cliente;
+import com.jesussanchez.kinalapp.entity.Venta;
 import com.jesussanchez.kinalapp.repository.ClienteRepository;
+import com.jesussanchez.kinalapp.repository.VentaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +15,11 @@ import java.util.Optional;
 public class ClienteService implements IClienteService {
 
     private final ClienteRepository clienteRepository;
+    private final VentaRepository ventaRepository;
 
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(ClienteRepository clienteRepository, VentaRepository ventaRepository) {
         this.clienteRepository = clienteRepository;
+        this.ventaRepository = ventaRepository;
     }
 
     @Override
@@ -56,6 +61,19 @@ public class ClienteService implements IClienteService {
         if (!clienteRepository.existsById(dpi)) {
             throw new RuntimeException("El cliente no se encontro con el DPI " + dpi);
         }
+
+
+        List<Venta> ventasCliente = ventaRepository.findByClienteDpiCliente(dpi);
+
+        if (!ventasCliente.isEmpty()) {
+
+            Cliente cliente = clienteRepository.findById(dpi).get();
+            cliente.setEstado(0);
+            clienteRepository.save(cliente);
+            throw new RuntimeException("El cliente tiene ventas asociadas. No se puede eliminar, solo se ha desactivado.");
+        }
+
+
         clienteRepository.deleteById(dpi);
     }
 

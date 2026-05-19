@@ -3,10 +3,10 @@ package com.jesussanchez.kinalapp.controller;
 import com.jesussanchez.kinalapp.entity.Cliente;
 import com.jesussanchez.kinalapp.service.IClienteService;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -54,7 +54,6 @@ public class ClienteController {
         boolean isAdmin = authentication.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
-        // Solo ADMIN puede editar
         if (!isAdmin) {
             return "redirect:/clientes?error=No tienes permisos para editar";
         }
@@ -71,19 +70,21 @@ public class ClienteController {
     }
 
     @GetMapping("/eliminar/{dpi}")
-    public String eliminar(@PathVariable String dpi, Authentication authentication) {
+    public String eliminar(@PathVariable String dpi, Authentication authentication, RedirectAttributes redirectAttributes) {
         boolean isAdmin = authentication.getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
-        // Solo ADMIN puede eliminar
         if (!isAdmin) {
             return "redirect:/clientes?error=No tienes permisos para eliminar";
         }
 
         try {
             clienteService.eliminar(dpi);
+            redirectAttributes.addFlashAttribute("mensaje", "Cliente eliminado correctamente");
+            redirectAttributes.addFlashAttribute("tipoMensaje", "success");
         } catch (Exception e) {
-            // Log error
+            redirectAttributes.addFlashAttribute("mensaje", e.getMessage());
+            redirectAttributes.addFlashAttribute("tipoMensaje", "warning");
         }
         return "redirect:/clientes";
     }
