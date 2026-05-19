@@ -17,29 +17,29 @@
                 <div class="card-body">
                     <form th:action="@{/usuarios/guardar}" th:object="${usuario}" method="post">
                         <input type="hidden" th:field="*{codigoUsuario}">
+
                         <div class="mb-3">
                             <label class="form-label">Nombre de Usuario</label>
-                            <input type="text" th:field="*{username}" class="form-control" th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : ''">
+                            <input type="text" th:field="*{username}" class="form-control" th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : ''" required>
                             <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="invalid-feedback"></div>
                         </div>
+
                         <div class="mb-3">
                             <label class="form-label">Correo Electrónico</label>
-                            <input type="email" th:field="*{email}" class="form-control" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''">
+                            <input type="email" th:field="*{email}" class="form-control" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''" required>
                             <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
                         </div>
+
                         <div class="mb-3">
                             <label class="form-label">Contraseña</label>
-                            <input type="password" th:field="*{password}" class="form-control" th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''">
+                            <input type="password" th:field="*{password}" class="form-control" th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''" required>
                             <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>
+                            <small class="text-muted">Mínimo 4 caracteres. La contraseña se encriptará automáticamente.</small>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Rol</label>
-                            <select th:field="*{rol}" class="form-select" th:classappend="${#fields.hasErrors('rol')} ? 'is-invalid' : ''">
-                                <option value="ADMIN">Administrador</option>
-                                <option value="USER">Usuario Estándar</option>
-                            </select>
-                            <div th:if="${#fields.hasErrors('rol')}" th:errors="*{rol}" class="invalid-feedback"></div>
-                        </div>
+
+                        <!-- Campo ROL ELIMINADO - Se asigna automáticamente en el backend -->
+                        <!-- El primer usuario registrado será ADMIN, los demás USER por defecto -->
+
                         <div class="mb-3">
                             <label class="form-label">Estado</label>
                             <select th:field="*{estado}" class="form-select" th:classappend="${#fields.hasErrors('estado')} ? 'is-invalid' : ''">
@@ -48,6 +48,7 @@
                             </select>
                             <div th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}" class="invalid-feedback"></div>
                         </div>
+
                         <div class="d-flex justify-content-between">
                             <a th:href="@{/usuarios}" class="btn btn-secondary">Cancelar</a>
                             <button type="submit" class="btn btn-success">Guardar Usuario</button>
